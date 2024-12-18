@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Contact Book Plus</title>
+        <link rel="stylesheet" href="css/bootstrap-grid.min.css">
+        <link rel="stylesheet" href="custom.css">
+    </head>
+    <body>
+        <br/>
+        <form id="editForm">
+            <label for="firstname">Firstname</label>
+            <input type="text" name="firstname" id="firstname"><br/>
+            <label for="laststname">Lastname</label>
+            <input type="text" name="lastname" id="lastname"><br/>
+            <label for="mobile">Mobile</label>
+            <input type="text" name="mobile"><br/>
+            <label for="email">Email</label>
+            <input type="text" name="email"><br/>
+            <label for="avatar">Select a file</label><br/>
+            <input type="file" name="avatar" id="avatar"><br/>
+            <button type="submit" id="submitForm">Submit</button>
+        </form>
+        <br/>
+        <button src="homeLink" type="button">Home</button>
+        
+        <script src="config.js"></script>
+        <script>
+            document.getElementById("submitForm").addEventListener('click', submitForm);
+            document.getElementById("homeLink").addEventListener('click', homeLink);
+            
+           function submitForm(e){
+               e.preventDefault();
+               
+               const form = new FormData(document.querySelector('#editForm'));
+               form.append('apiKey', apiKey);
+               
+               fetch(rootPath + 'controller/insert-contact/', {
+                   method: 'POST',
+                   headers: {'Accept': 'application/json, *.*'},
+                   body: form
+               })  
+               .then(function(response){
+                   return response.text();
+               })
+               .then(function(data){
+                   if(data == "1"){
+                       alert("Contact added.");
+                       homeLink(;)
+                   }else{
+                       alert(data);
+                       homeLink();
+                   }
+               })
+           }
+            
+            function homeLink(){
+                window.open("index.html", "_self");
+            }
+            
+        </script>
+        
+                <hr />
+        <footer class='container footer-section'>
+            <!-- Added float-right to align "Back to top" link properly -->
+            <p><a href="#" id='back-to-top' style='float:right;'>Back to home</a></p> 
+            <!-- Changed copyright year to current year dynamically with JavaScript if needed -->
+            &copy; 2022-2024 Company, Inc. &middot; 
+            <a href="#">Privacy</a> &middot; 
+            <a href="#">Terms</a></footer>  
+       
+    <script src='js/jquery-3.7.1.js'></script> 
+    <script src='js/bootstrap.bundle.min.js'></script> 
+    </body>
+</html>
